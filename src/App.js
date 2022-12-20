@@ -13,8 +13,17 @@ function App() {
   const { isGoodWeather, emoji, temperature } = useFetch(timer);
 
   useEffect(() => {
-    setInterval(() => setTimer(timer + 1), 5000);
-  }, [timer]);
+    const intervalId = setInterval(
+      () =>
+        setTimer((currentTimer) => {
+          return currentTimer + 1;
+        }),
+      5000
+    );
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   // Delete Activity
   function handleDeleteActivity(id) {
